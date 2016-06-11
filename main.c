@@ -6,6 +6,10 @@
 //Input Buffer. Wir werden das brauchen
 //um Dateien partiell einzulesen
 #define MAX_BUFFER 4069
+char* USAGE = (char*)"usage: <in, out, key>\n";
+char* TO_FEW_ARGS = (char*)"Three parameters are needed!\nusage <in, out, key>\nUser -h/-help for further information\n";
+char* HELP = (char*)"The cryptonite programme encrypts data with a given key file.\nThe algorithm is a simple XOR encryption.\nIf the key file is smaller than the data file the key file will be rewinded,\nso parts of the key file might be uses multiple times.!\nTo enhance the strength of the encryption make sure that the key file is equal or greater in lenght.\n";
+                      
 
 //Haendelt fatale Fehler, die 
 //unausweichlich zur auszerplanmaezigen
@@ -78,14 +82,14 @@ int crypt_file(FILE* in, FILE* out, FILE* key)
 
 int main(int argc, char** argv)
 {
-	if(argc >= 2 && strcmp(argv[1], "-h") == 0){printf("usage <in, out, key>\n"); return 0;}
-	if(argc < 3){printf("At least two parameters are needed!\n-h for help\n"); return 0;}
+	if(argc >= 2 && strcmp(argv[1], "-h") == 0){printf("%s", HELP); printf("%s", USAGE); return 0;}
+	if(argc < 3){printf("%s", TO_FEW_ARGS); return 0;}
 
 	FILE* in_file = fopen(argv[1], "r");
 	if(in_file == NULL){fatal("Opening the input file!");}
 	FILE* key_file = fopen(argv[3], "r");
 	if(key_file == NULL){fatal("Opening the key file!");}
-	FILE* out_file = fopen(argv[2], "a");
+	FILE* out_file = fopen(argv[2], "w");
 	if(out_file == NULL){fatal("Opening the output file!");}
 
 	if(crypt_file(in_file, out_file, key_file) == -1){printf("Error reading the input buffers synchroniusly");}
