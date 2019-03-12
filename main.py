@@ -43,8 +43,6 @@ if __name__ == "__main__":
             help="The file to write to. Ommit to use stdout.")
     parser.add_argument("--chunk_width", default=1024,  type=int,
             help="The width of the chunks to read and write")
-    parser.add_argument("--reuse_key", default=False, action="store_true",
-            help="Reuse the key if the data file extends the key file")
     args = parser.parse_args()
 
     data_fd = None
